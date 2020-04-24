@@ -56,6 +56,10 @@ module.exports = function MacroMaker(mod) {
         if (ahk) {
             ahk.destructor();
             ahk = null;
+            hotkeyActions = {};
+            skillActions = {};
+            lastCast = {};
+            cooldowns = {};
         }
     });
 
