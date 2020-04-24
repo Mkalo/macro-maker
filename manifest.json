@@ -1,0 +1,69 @@
+{
+  "files": {
+    "index.js": "16ee6f3076e5e916fa085daf81018dc5d3741bed0262b01af76ca5264c5022fd",
+    "README.md": "199682cb5515be72cce219d68971d6c0fa6790fbd34dfaaeec1af57cba7ccb14",
+    "Matt.js": "b7b22637c4ae29552cfaea47046e86510f91583f49b49497dfbaab6305fc48f1",
+    "lib/ahk.js": "8a88e9738f9889abc405acbfbd23b78174f31ab9ebaff931a1549bec8cd9b1ef",
+    "ahk/input.ahk": "03a94837d0080538b80d9217c165edb9de0097f2d066eb2c057ae4443bcc8bfa",
+    "config.json": {
+      "overwrite": false,
+      "hash": "362265899a4434f1c0ae658e22436654731a90db7e5d3d9eb7f5cda17c589db1"
+    },
+    "macros/Archer.js": {
+      "overwrite": false,
+      "hash": "3d0ee3d843511836a7a6c0539804e0bcd8e7bbd22e9215cd3ebba051aecc7506"
+    },
+    "macros/Berserker.js": {
+      "overwrite": false,
+      "hash": "e16a2e241efb3bc9b637041997247e30514fb9530fb7e8043cd5fa2de4f5c017"
+    },
+    "macros/Brawler.js": {
+      "overwrite": false,
+      "hash": "5d628d8b08136f1345dd2bb5fbcb6ab86890c4e4c9818060c0e21928b0ec7943"
+    },
+    "macros/Gunner.js": {
+      "overwrite": false,
+      "hash": "774d81cdb2052aeaa254f74edad3b2fd5d0a311c790673abccf7205875114d86"
+    },
+    "macros/Lancer.js": {
+      "overwrite": false,
+      "hash": "0c9fc13e25d3b7f5e1b96329604be4831fea0f57892d0770c6523a823cb008b2"
+    },
+    "macros/Mystic.js": {
+      "overwrite": false,
+      "hash": "e700d7011354f7a1473a469cdde08c5039e5380a7fdc06b89351346fcc11f3c4"
+    },
+    "macros/Ninja.js": {
+      "overwrite": false,
+      "hash": "e5090520f38b73a7eb0d521ea8758180ddbd5f26a215d4036120367966724786"
+    },
+    "macros/Priest.js": {
+      "overwrite": false,
+      "hash": "8559ee0289200b92c76296df378d98e31bd2360835260203fa43bbf051779763"
+    },
+    "macros/Reaper.js": {
+      "overwrite": false,
+      "hash": "f9adb7918c81122d473d79d436b51cc67cc567ecfe06611f7ae06bcb7cb763f3"
+    },
+    "macros/Slayer.js": {
+      "overwrite": false,
+      "hash": "d8b2b6f42b84846161e26117cb7668e6f0bc8e2596ad53350bea1b76c67d32b8"
+    },
+    "macros/Sorcerer.js": {
+      "overwrite": false,
+      "hash": "1f940759423ba59b10c75465585070c114913ffa4a23046d85ba398e1551298d"
+    },
+    "macros/Valkyrie.js": {
+      "overwrite": false,
+      "hash": "324d3b93368a13fd689cc509eec8f7100354766a4566c9eea0391263afae1674"
+    },
+    "macros/Warrior.js": {
+      "overwrite": false,
+      "hash": "9823134e9d792d2fa02e73996cdc805e2422ca6d5ec226fe47ad6d25fcd25475"
+    }
+  },
+  "defs": {
+    "S_ACTION_STAGE": 9,
+    "S_START_COOLTIME_SKILL": 3
+  }
+}

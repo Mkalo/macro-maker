@@ -1,0 +1,15 @@
+{
+    "disableAutoUpdate": false,
+    "name": "Macro-Maker",
+    "author": "Matt",
+    "description": "Module to help you make macros for any class, using only AHK with no other dependency.",
+    "version": "1.0",
+    "options": {
+        "reloadable": true
+    },
+    "dependencies": {
+        "library": "https://raw.githubusercontent.com/Kaseaa/library/master/module.json"
+    },
+    "supportUrl": "https://github.com/Mkalo/macro-maker/issues",
+    "servers": ["https://raw.githubusercontent.com/Mkalo/macro-maker/master/"]
+}
