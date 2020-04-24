@@ -56,8 +56,8 @@ Each key is a base skill id, and the value is the configuration for that skill, 
     * enabled: **true|false** - Enables this one macro
     * key: **key** - Key that will be used for this macro, only used if onPress or repeater is present
     * repeater: **true|false** - If this is set to true, whenever you have this key pressed down, it will spam it until you release it
-    * onPress: *MacroAction|[MacroActions]* - Actions to take upon key press
-    * onCast: *MacroAction|[MacroActions]* - Actions to take upon cast
+    * onPress: *MacroAction|[MacroActions]* - Actions to take on key press
+    * onCast: *MacroAction|[MacroActions]* - Actions to take on skill cast
 
 #### MacroHotkeysConfig
 
@@ -66,7 +66,7 @@ Each key is the hotkey that is being configured.
 * key: {
     * enabled: **true|false** - Enables this one macro
     * repeater: **true|false** - If this is set to true, whenever you have this key pressed down, it will spam it until you release it
-    * onPress: *MacroAction|[MacroActions]* - Actions to take upon key press
+    * onPress: *MacroAction|[MacroActions]* - Actions to take on key press
 
 #### MacroActions
 
