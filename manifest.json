@@ -1,65 +1,65 @@
 {
   "files": {
-    "index.js": "16ee6f3076e5e916fa085daf81018dc5d3741bed0262b01af76ca5264c5022fd",
-    "README.md": "e9fd1474bbca6495447e870fe20da3ec0cba6150f6e288fa17ef3ab571f32885",
-    "Matt.js": "b7b22637c4ae29552cfaea47046e86510f91583f49b49497dfbaab6305fc48f1",
-    "lib/ahk.js": "8a88e9738f9889abc405acbfbd23b78174f31ab9ebaff931a1549bec8cd9b1ef",
-    "ahk/input.ahk": "03a94837d0080538b80d9217c165edb9de0097f2d066eb2c057ae4443bcc8bfa",
+    "index.js": "be6e94f1391c5d380bcb3e16006f54aec5e53a74e2ceb3da69609805325424cc",
+    "README.md": "1700deba8c7594af87805d4696e65c733bd30ec3491f560843e1e92af83edcfa",
+    "Matt.js": "5049cd28d7dcf04e68605cae15510bef3fa707933b4d7fa562ecfb66dfed392b",
+    "lib/ahk.js": "f9a93e892b044a3bac145292797117bd5ccb035b28203f0735267c06df32a742",
+    "ahk/input.ahk": "ce0e5acb8237e3c2094ba7bb11617df076b5b159358aab088009bf090a13b625",
     "config.json": {
       "overwrite": false,
-      "hash": "362265899a4434f1c0ae658e22436654731a90db7e5d3d9eb7f5cda17c589db1"
+      "hash": "de8f101b4bb0ddd3cbe7d555ebdfbc2988bcbfcd88183816e65a1ff3d5ecfe60"
     },
     "macros/Archer.js": {
       "overwrite": false,
-      "hash": "3d0ee3d843511836a7a6c0539804e0bcd8e7bbd22e9215cd3ebba051aecc7506"
+      "hash": "311c5a52bb914367bbc5fd43f0b467a8bc8e4dbcefab90e4fb69d9c326aaa1ea"
     },
     "macros/Berserker.js": {
       "overwrite": false,
-      "hash": "e16a2e241efb3bc9b637041997247e30514fb9530fb7e8043cd5fa2de4f5c017"
+      "hash": "a6435426b8be8d45644b34d1c949b5d7d1c17fa7503c7ea50eb535cb68b09355"
     },
     "macros/Brawler.js": {
       "overwrite": false,
-      "hash": "5d628d8b08136f1345dd2bb5fbcb6ab86890c4e4c9818060c0e21928b0ec7943"
+      "hash": "fa402d0cc06a760929a8ba50881b577badc1f65dc293a63fc98d030265e6cd91"
     },
     "macros/Gunner.js": {
       "overwrite": false,
-      "hash": "774d81cdb2052aeaa254f74edad3b2fd5d0a311c790673abccf7205875114d86"
+      "hash": "defb52140b048219b8fb995dcbc99fc2a9ef0a37c68cc447321b52f3339a4922"
     },
     "macros/Lancer.js": {
       "overwrite": false,
-      "hash": "0c9fc13e25d3b7f5e1b96329604be4831fea0f57892d0770c6523a823cb008b2"
+      "hash": "f9e69915143c70913a4de388e0762412482a8379686c5f80032d83c9dbeeb271"
     },
     "macros/Mystic.js": {
       "overwrite": false,
-      "hash": "e700d7011354f7a1473a469cdde08c5039e5380a7fdc06b89351346fcc11f3c4"
+      "hash": "bb35c409e12f6ef361d3fb1fabe90685f4996cf67b78eb6373750b697076326b"
     },
     "macros/Ninja.js": {
       "overwrite": false,
-      "hash": "e5090520f38b73a7eb0d521ea8758180ddbd5f26a215d4036120367966724786"
+      "hash": "4133ebf5b4a98867ecb1a200b96a00b311eae6f119245dfa5053fc4c8ca0acd7"
     },
     "macros/Priest.js": {
       "overwrite": false,
-      "hash": "8559ee0289200b92c76296df378d98e31bd2360835260203fa43bbf051779763"
+      "hash": "dda4a0f76b85a8493f496fc8e9e8a219c49f5d26c3dce4322ed5d3be48d7c57a"
     },
     "macros/Reaper.js": {
       "overwrite": false,
-      "hash": "f9adb7918c81122d473d79d436b51cc67cc567ecfe06611f7ae06bcb7cb763f3"
+      "hash": "d0d07866960f6eff4ca86e16a87cf561b121d4ec39e186bf6c55c70fa8c70bb5"
     },
     "macros/Slayer.js": {
       "overwrite": false,
-      "hash": "d8b2b6f42b84846161e26117cb7668e6f0bc8e2596ad53350bea1b76c67d32b8"
+      "hash": "e6abec299ec0fd194adf8e8c2c1fc5eeb1874b5cd259b1456200346e865cc083"
     },
     "macros/Sorcerer.js": {
       "overwrite": false,
-      "hash": "1f940759423ba59b10c75465585070c114913ffa4a23046d85ba398e1551298d"
+      "hash": "4a8d41871ab0012b471d154264ef0beeea3a3b9546ce75245d754b1752c46b7b"
     },
     "macros/Valkyrie.js": {
       "overwrite": false,
-      "hash": "324d3b93368a13fd689cc509eec8f7100354766a4566c9eea0391263afae1674"
+      "hash": "109794c06a2be1e97efd57a2ddb7e932c0f94e961131dc22e8a724ba645b4a6a"
     },
     "macros/Warrior.js": {
       "overwrite": false,
-      "hash": "9823134e9d792d2fa02e73996cdc805e2422ca6d5ec226fe47ad6d25fcd25475"
+      "hash": "4c7a59ac37cd2914c85abf341f009aa886e08f174e212132bf7ab6a490b0ba91"
     }
   },
   "defs": {
