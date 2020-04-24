@@ -70,12 +70,12 @@ module.exports = function MacroMaker(mod) {
         }
     });
 
-    function getKeyAndModifiers(hotkey) {
+    function getModifiersAndKey(hotkey) {
         const [key, ...modifiers] = hotkey.toLowerCase().split('+').reverse();
-        return `${modifiers.map(x => x.trim())
+        return [`${modifiers.map(x => x.trim())
             .filter(x => ['shift', 'ctrl', 'alt'].includes(x))
             .map(x => { return {'shift': '+', 'ctrl': '^', 'alt': '!'}[x] })
-            .join("")}${{"left-click": "LButton", "right-click": "RButton", "middle-click": "MButton"}[key] || key}`;
+            .join("")}`, `${{"left-click": "LButton", "right-click": "RButton", "middle-click": "MButton"}[key] || key}`];
     }
 
     function compileAndRunMacro() {
@@ -89,7 +89,7 @@ module.exports = function MacroMaker(mod) {
         // Parse Hotkeys
         for (let [key, hotkey] of Object.entries(macro.hotkeys)) {
             if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
-            key = getKeyAndModifiers(key);
+            key = getModifiersAndKey(key).join("");
 
             if (hotkey.repeater) {
                 repeaterKeys.add(key);
@@ -109,7 +109,7 @@ module.exports = function MacroMaker(mod) {
         // Parse Skills
         for (let [skill, hotkey] of Object.entries(macro.skills)) {
             if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
-            const key = getKeyAndModifiers(hotkey.key);
+            const key = getModifiersAndKey(hotkey.key).join("");
 
             if (hotkey.repeater) {
                 repeaterKeys.add(key);
@@ -144,7 +144,7 @@ module.exports = function MacroMaker(mod) {
         }
 
         if (repeaterKeys.size) {
-            compilerPromises.push(AHK.compileRepeaterAhk([...repeaterKeys], macro.toggleRepeaterKey ? getKeyAndModifiers(macro.toggleRepeaterKey) : "\\", path.join(__dirname, "ahk", "repeater.ahk")));
+            compilerPromises.push(AHK.compileRepeaterAhk([...repeaterKeys], macro.toggleRepeaterKey ? getModifiersAndKey(macro.toggleRepeaterKey).join("") : "\\", path.join(__dirname, "ahk", "repeater.ahk")));
         } else if (fs.existsSync(path.join(__dirname, "ahk", "repeater.ahk"))) {
             fs.unlinkSync(path.join(__dirname, "ahk", "repeater.ahk"));
         }
@@ -196,13 +196,13 @@ module.exports = function MacroMaker(mod) {
         switch (action.action.toLowerCase()) {
             case "keytap": {
                 mod.setTimeout(() => {
-                    ahk.keyTap(getKeyAndModifiers(action.key), action.holdDuration);
+                    ahk.keyTap(...getModifiersAndKey(action.key).reverse(), action.holdDuration);
                 }, delay);
                 break;
             }
             case "keyrepeat": {
                 mod.setTimeout(() => {
-                    ahk.keyRepeat(getKeyAndModifiers(action.key), action.duration, action.interval, (action.stopOnNextCast && trigger) ? skillBaseId : 0, (action.stopOnNextCast && trigger) ? lastCast : {skill: 0});
+                    ahk.keyRepeat(...getModifiersAndKey(action.key).reverse(), action.duration, action.interval, (action.stopOnNextCast && trigger) ? skillBaseId : 0, (action.stopOnNextCast && trigger) ? lastCast : {skill: 0});
                 }, delay);
                 break;
             }
