@@ -276,5 +276,6 @@ module.exports = function MacroMaker(mod) {
         }
         if (enterGameEvent) mod.game.off("enter_game", enterGameEvent);
         if (leaveGameEvent) mod.game.off("leave_game", leaveGameEvent);
+        command.remove(['macro']);
     }
 }
