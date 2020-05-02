@@ -107,3 +107,8 @@ Spring Attack -> Wallop only if Wallop is not on cooldown, block cancel it other
 For most chained skills, you will need different delay times, you can do that by using the skillSubId as I used. 
 
 You can see more examples here [Matt.js](https://github.com/Mkalo/macro-maker/blob/master/Matt.js).
+
+## Known Issues
+
+Dual client not supported, and it will bug out.
+XButton1 and XButton2 are not working properly.
