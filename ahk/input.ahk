@@ -1,3 +1,4 @@
+#NoTrayIcon
 stdin  := FileOpen("*", "r `n")
 SetKeyDelay, -1
 SetMouseDelay, -1

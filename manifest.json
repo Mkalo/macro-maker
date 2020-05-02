@@ -1,10 +1,10 @@
 {
   "files": {
-    "index.js": "95ee5aacbd3fc2eb455fdc325c0e82a209186c726c6c3560aacaed1fe3e4959d",
+    "index.js": "bf3ac7694644c85b65af108e65f02eb4830251f414bfa2200c7d749d7da4e2da",
     "README.md": "1700deba8c7594af87805d4696e65c733bd30ec3491f560843e1e92af83edcfa",
     "Matt.js": "5049cd28d7dcf04e68605cae15510bef3fa707933b4d7fa562ecfb66dfed392b",
-    "lib/ahk.js": "b9bb6a595848c5229ebda3be85d01abe2b05366d6471e21a4d3ac052df61ecec",
-    "ahk/input.ahk": "ce0e5acb8237e3c2094ba7bb11617df076b5b159358aab088009bf090a13b625",
+    "lib/ahk.js": "1a6f765e2bcafc477bedbdc29cbc9c2b5b9ad6b7bb762c8eb68725639bedab73",
+    "ahk/input.ahk": "beb806e81d8f37aa86ce346a88f7a1c5421841ceef1a1138f33ebc4c01fcd7fe",
     "config.json": {
       "overwrite": false,
       "hash": "de8f101b4bb0ddd3cbe7d555ebdfbc2988bcbfcd88183816e65a1ff3d5ecfe60"

@@ -90,6 +90,10 @@ module.exports = function MacroMaker(mod) {
         const keys = new Set();
         const repeaterKeys = new Set();
 
+        let useOutput,
+            useRepeater,
+            useInput;
+
         // Parse Hotkeys
         for (let [key, hotkey] of Object.entries(macro.hotkeys)) {
             if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
@@ -101,6 +105,7 @@ module.exports = function MacroMaker(mod) {
 
             const onPress = (typeof hotkey.onPress === "object" && !Array.isArray(hotkey.onPress)) ? [hotkey.onPress] : hotkey.onPress;
             if (Array.isArray(onPress) && onPress.length) {
+                useInput = true;
                 if (hotkeyActions[key]) {
                     hotkeyActions[key] = hotkeyActions[key].concat(onPress);
                 } else {
@@ -121,6 +126,7 @@ module.exports = function MacroMaker(mod) {
 
             const onPress = (typeof hotkey.onPress === "object" && !Array.isArray(hotkey.onPress)) ? [hotkey.onPress] : hotkey.onPress;
             if (Array.isArray(onPress) && onPress.length) {
+                useInput = true;
                 if (hotkeyActions[key]) {
                     hotkeyActions[key] = hotkeyActions[key].concat(onPress);
                 } else {
@@ -142,12 +148,14 @@ module.exports = function MacroMaker(mod) {
         const compilerPromises = [];
 
         if (keys.size) {
+            useOutput = true;
             compilerPromises.push(AHK.compileOutputAhk([...keys], path.join(__dirname, "ahk", "output.ahk")));
         } else if (fs.existsSync(path.join(__dirname, "ahk", "output.ahk"))) {
             fs.unlinkSync(path.join(__dirname, "ahk", "output.ahk"));
         }
 
         if (repeaterKeys.size) {
+            useRepeater = true;
             compilerPromises.push(AHK.compileRepeaterAhk([...repeaterKeys], macro.toggleRepeaterKey ? getModifiersAndKey(macro.toggleRepeaterKey).join("") : "\\", path.join(__dirname, "ahk", "repeater.ahk")));
         } else if (fs.existsSync(path.join(__dirname, "ahk", "repeater.ahk"))) {
             fs.unlinkSync(path.join(__dirname, "ahk", "repeater.ahk"));
@@ -155,7 +163,7 @@ module.exports = function MacroMaker(mod) {
 
         const promise = Promise.all(compilerPromises);
         promise.then(() => {
-            runAhk();
+            runAhk(useInput, useOutput, useRepeater);
         })
         .catch(err => {
             mod.error(err);
@@ -217,17 +225,20 @@ module.exports = function MacroMaker(mod) {
         }
     }
 
-    function runAhk() {
+    function runAhk(useInput, useOutput, useRepeater) {
         if (reloading || ahk) return;
-        ahk = new AHK(path.join(__dirname, "ahk", "input.ahk"), path.join(__dirname, "ahk", "output.ahk"), path.join(__dirname, "ahk", "repeater.ahk"));
 
-        ahk.on("hotkey_press", hotkey => {
-            if (!enabled) return;
+        ahk = new AHK(useInput ? path.join(__dirname, "ahk", "input.ahk") : false, useOutput ? path.join(__dirname, "ahk", "output.ahk") : false, useRepeater ? path.join(__dirname, "ahk", "repeater.ahk") : false);
 
-            if (hotkeyActions[hotkey]) {
-                hotkeyActions[hotkey].forEach(action => handleAction(action));
-            }
-        });
+        if (useInput) {
+            ahk.on("hotkey_press", hotkey => {
+                if (!enabled) return;
+
+                if (hotkeyActions[hotkey]) {
+                    hotkeyActions[hotkey].forEach(action => handleAction(action));
+                }
+            });
+        }
     }
 
     mod.hook("S_ACTION_STAGE", 9, { order: -Infinity, filter: { fake: !!config["skill-prediction"] }}, event => {
