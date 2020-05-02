@@ -43,6 +43,16 @@ module.exports = function MacroMaker(mod) {
         useRepeater,
         useInput,
         compiled;
+    
+    mod.setTimeout(() => {
+        if (mod.game.isIngame && !reloading && !macroFile) {
+            let currentPath;
+            if (fs.existsSync(currentPath = path.join(__dirname, "macros", `${mod.game.me.name}-${mod.game.me.serverId}.js`)) || fs.existsSync(currentPath = path.join(__dirname, "macros", `${mod.game.me.name}.js`)) || fs.existsSync(currentPath = path.join(__dirname, "macros", `${DataCenter_ClassNames[mod.game.me.class]}.js`))) {
+                macroFile = currentPath;
+                compileAndRunMacro();
+            }
+        }
+    }, 1000);
 
     mod.game.on('enter_game', enterGameEvent = () => {
         let currentPath;
@@ -72,19 +82,20 @@ module.exports = function MacroMaker(mod) {
             debugMode = !debugMode;
             command.message(`Debug mode is now ${debugMode ? 'en' : 'dis'}abled.`);
         },
-        $default() {
+        async $default() {
             enabled = !enabled;
-            command.message(`Macros are now ${enabled ? 'en' : 'dis'}abled.`);
             if (enabled) {
                 if (compiled) {
                     runAhk(useInput, useOutput, useRepeater);
                 } else {
-                    compileAndRunMacro();
+                    await compileAndRunMacro();
                 }
-            } else {
+            } else if (ahk) {
                 ahk.destructor();
                 ahk = null;
             }
+
+            command.message(`Macros are now ${enabled ? 'en' : 'dis'}abled.`);
         }
     });
 
@@ -289,10 +300,18 @@ module.exports = function MacroMaker(mod) {
     }
 
     this.loadState = state => {
+        reloading = true;
         macroFile = state.macroFile;
         const promise = compileAndRunMacro();
         if (promise) {
-            promise.then(() => command.message("Finished reloading."));
+            promise.then(() => {
+                reloading = false;
+                command.message("Finished reloading.");
+            })
+            .catch(() => {
+                reloading = false;
+                command.message("Failed to compile macro while reloading.");
+            });
         } else {
             command.message("Finished reloading.");
         }
