@@ -137,6 +137,7 @@ module.exports = function MacroMaker(mod) {
 
             const onCast = (typeof hotkey.onCast === "object" && !Array.isArray(hotkey.onCast)) ? [hotkey.onCast] : hotkey.onCast;
             if (Array.isArray(onCast) && onCast.length) {
+                useInput = true;
                 if (skillActions[skill]) {
                     skillActions[skill] = skillActions[skill].concat(onCast);
                 } else {
