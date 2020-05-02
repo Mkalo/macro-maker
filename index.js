@@ -38,7 +38,11 @@ module.exports = function MacroMaker(mod) {
         enabled = true,
         debugMode = false,
         lastSkill,
-        lastTime;
+        lastTime,
+        useOutput,
+        useRepeater,
+        useInput,
+        compiled;
 
     mod.game.on('enter_game', enterGameEvent = () => {
         let currentPath;
@@ -71,6 +75,16 @@ module.exports = function MacroMaker(mod) {
         $default() {
             enabled = !enabled;
             command.message(`Macros are now ${enabled ? 'en' : 'dis'}abled.`);
+            if (enabled) {
+                if (compiled) {
+                    runAhk(useInput, useOutput, useRepeater);
+                } else {
+                    compileAndRunMacro();
+                }
+            } else {
+                ahk.destructor();
+                ahk = null;
+            }
         }
     });
 
@@ -90,9 +104,9 @@ module.exports = function MacroMaker(mod) {
         const keys = new Set();
         const repeaterKeys = new Set();
 
-        let useOutput,
-            useRepeater,
-            useInput;
+        useOutput = false;
+        useRepeater = false;
+        useInput = false;
 
         // Parse Hotkeys
         for (let [key, hotkey] of Object.entries(macro.hotkeys)) {
@@ -165,9 +179,11 @@ module.exports = function MacroMaker(mod) {
         const promise = Promise.all(compilerPromises);
         promise.then(() => {
             runAhk(useInput, useOutput, useRepeater);
+            compiled = true;
         })
         .catch(err => {
             mod.error(err);
+            compiled = false;
         });
 
         return promise;

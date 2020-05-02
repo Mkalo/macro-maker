@@ -20,7 +20,7 @@ In the config.json file, you have to put the path to where your AutoHotkey.exe i
 
 | Command                    | Description         |
 | -------------------------- |-------------------- |
-| !macro                     | Toggles macro on and off (doesn't toggle repeater) |
+| !macro                     | Toggles macro on and off |
 | !macro debug               | Toggles skill debug on and off |
 | !proxy reload macro-maker  | Reloads macro and recompile it. **Don't reload again while it's reloading.** |
 
