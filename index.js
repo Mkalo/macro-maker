@@ -31,6 +31,7 @@ module.exports = function MacroMaker(mod) {
         hotkeyActions = {},
         skillActions = {},
         reloading = false,
+        loading = false,
         cooldowns = {},
         lastCast = {},
         enterGameEvent = null,
@@ -300,16 +301,16 @@ module.exports = function MacroMaker(mod) {
     }
 
     this.loadState = state => {
-        reloading = true;
+        loading = true;
         macroFile = state.macroFile;
         const promise = compileAndRunMacro();
         if (promise) {
             promise.then(() => {
-                reloading = false;
+                loading = false;
                 command.message("Finished reloading.");
             })
             .catch(() => {
-                reloading = false;
+                loading = false;
                 command.message("Failed to compile macro while reloading.");
             });
         } else {
