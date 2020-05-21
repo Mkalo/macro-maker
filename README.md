@@ -1,6 +1,8 @@
 ## Macro Maker
 
-TERA Toolbox module to help you making macros for your classes and characters. It uses no native dependency other than AutoHotkey, so make sure you have it installed. You can download AutoHotkey from [here](https://www.autohotkey.com/).
+A TERA Toolbox module to assist with creating in-game macros for your class and/or specific characters. It uses no native dependency other than AutoHotkey, so make sure you have it installed. You can download AutoHotkey from [here](https://www.autohotkey.com/).
+
+Official Discord Server: https://discord.gg/4drwzxj
 
 ---
 
