@@ -76,10 +76,11 @@ This is where most of the configuration is done.
 Array of actions that are going to be processed. You can have multiple actions per macro. One action looks like this:
 
 * action: **keyTap | keyRepeat** - Either tap the specified key once or repeat it for given **duration** every **interval** ms
-* delay: **delay** - Will delay this action for **delay** ms, scales with attack speed unless fixedDelay is set to true.
+* delay: **delay** - Will delay this action for **delay** ms, scales with attack speed unless fixedDelay is set to true
 * key: **key** - Key that will be used for this action
+* skill: **skillId** - Can be used instead of key. This will use whichever key is assigned to that skill inside the config
 * holdDuration: **duration** - Only used if action is a keyTap, will hold the key for the given duration instead of instantly releasing
-* fixedDelay: **true | false** - If set to true, action will be delayed for **delay** ms without attack speed scaling.
+* fixedDelay: **true | false** - If set to true, action will be delayed for **delay** ms without attack speed scaling
 * duration: **duration** - Required if action is a keyRepeat, will repeat key presses for **duration** ms
 * interval: **interval** - Required if action is a keyRepeat, will repeat key pesses every **interval** ms
 * inCombat: **true | false** - If set, action only happens if inCombat state equals to this value
