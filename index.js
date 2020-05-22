@@ -228,7 +228,9 @@ module.exports = function MacroMaker(mod) {
             return;
         }
 
-        if (typeof action.skillSubId === "number" && trigger && trigger.skill.id % 100 !== action.skillSubId) {
+        const skillSubIds = (!Array.isArray(action.skillSubId) ? [action.skillSubId] : action.skillSubId).filter(x => !isNaN(x)).map(x => parseInt(x));
+
+        if (trigger && skillSubIds.length > 0 && !skillSubIds.includes(trigger.skill.id % 100)) {
             return;
         }
 

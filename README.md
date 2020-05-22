@@ -43,7 +43,7 @@ The skillId and subId are the ids of the skill that you just casted and the time
 
 So I will explain and breakdown what each field inside the Macro.js file does. I advise you to use a text editor that has syntax highlight like [Visual Studio Code](https://code.visualstudio.com/) to edit the file, so you can easily spot any missing comma or bracket.
 
-* enabled: **true|false** - Enables or disables the entire macro.
+* enabled: **true | false** - Enables or disables the entire macro.
 * toggleRepeaterKey: **key** - Key that will be used to toggle the key repeater on and off. (More on the repeater down below)
 * skills: *MacroSkillConfig*
 * hotkeys: *MacroHotkeysConfig*
@@ -55,38 +55,38 @@ The list of keys can be found [here](https://www.autohotkey.com/docs/KeyList.htm
 Each key is a base skill id, and the value is the configuration for that skill, the config looks like this:
 
 * skillBaseId: {
-    * enabled: **true|false** - Enables this one macro
+    * enabled: **true | false** - Enables this one macro
     * key: **key** - Key that will be used for this macro, only used if onPress or repeater is present
-    * repeater: **true|false** - If this is set to true, whenever you have this key pressed down, it will spam it until you release it
-    * onPress: *MacroAction|[MacroActions]* - Actions to take on key press
-    * onCast: *MacroAction|[MacroActions]* - Actions to take on skill cast
+    * repeater: **true | false** - If this is set to true, whenever you have this key pressed down, it will spam it until you release it
+    * onPress: *MacroAction | [MacroActions]* - Actions to take on key press
+    * onCast: *MacroAction | [MacroActions]* - Actions to take on skill cast
 
 #### MacroHotkeysConfig
 
 Each key is the hotkey that is being configured.
 
 * key: {
-    * enabled: **true|false** - Enables this one macro
-    * repeater: **true|false** - If this is set to true, whenever you have this key pressed down, it will spam it until you release it
-    * onPress: *MacroAction|[MacroActions]* - Actions to take on key press
+    * enabled: **true | false** - Enables this one macro
+    * repeater: **true | false** - If this is set to true, whenever you have this key pressed down, it will spam it until you release it
+    * onPress: *MacroAction | [MacroActions]* - Actions to take on key press
 
 #### MacroActions
 
 This is where most of the configuration is done.
 Array of actions that are going to be processed. You can have multiple actions per macro. One action looks like this:
 
-* action: **keyTap|keyRepeat** - Either tap the specified key once or repeat it for given **duration** every **interval** ms
+* action: **keyTap | keyRepeat** - Either tap the specified key once or repeat it for given **duration** every **interval** ms
 * delay: **delay** - Will delay this action for **delay** ms, scales with attack speed unless fixedDelay is set to true.
 * key: **key** - Key that will be used for this action
 * holdDuration: **duration** - Only used if action is a keyTap, will hold the key for the given duration instead of instantly releasing
-* fixedDelay: **true|false** - If set to true, action will be delayed for **delay** ms without attack speed scaling.
+* fixedDelay: **true | false** - If set to true, action will be delayed for **delay** ms without attack speed scaling.
 * duration: **duration** - Required if action is a keyRepeat, will repeat key presses for **duration** ms
 * interval: **interval** - Required if action is a keyRepeat, will repeat key pesses every **interval** ms
-* inCombat: **true|false** - If set, action only happens if inCombat state equals to this value
-* skillSubId: **subId** - Used on onCast only, specify which skill sub id to trigger action
-* stopOnNextCast: **true|false** - Used on onCast only if action type **keyRepeat**, stops key presses after casting a skill
-* enableIfSkillCooldown: **skill|[skills]** - This action is only executed if these skill(s) are on cooldown
-* disableIfSkillCooldown: **skill|[skills]** - This action is only executed if these skill(s) are not on cooldown
+* inCombat: **true | false** - If set, action only happens if inCombat state equals to this value
+* skillSubId: **subId | [subIds]** - Used on onCast only, specify which skill subId(s) to trigger action
+* stopOnNextCast: **true | false** - Used on onCast only if action type **keyRepeat**, stops key presses after casting a skill
+* enableIfSkillCooldown: **skill | [skills]** - This action is only executed if these skill(s) are on cooldown
+* disableIfSkillCooldown: **skill | [skills]** - This action is only executed if these skill(s) are not on cooldown
 
 #### Example
 
