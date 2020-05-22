@@ -28,6 +28,7 @@ module.exports = function MacroMaker(mod) {
 
     let ahk = null,
         macroFile = null,
+        macroConfig = null,
         hotkeyActions = {},
         skillActions = {},
         reloading = false,
@@ -110,8 +111,8 @@ module.exports = function MacroMaker(mod) {
 
     function compileAndRunMacro() {
         if (!macroFile) return;
-        const macro = require(macroFile);
-        if (!macro.enabled) return;
+        macroConfig = require(macroFile);
+        if (!macroConfig.enabled) return;
 
         const keys = new Set();
         const repeaterKeys = new Set();
@@ -121,7 +122,7 @@ module.exports = function MacroMaker(mod) {
         useInput = false;
 
         // Parse Hotkeys
-        for (let [key, hotkey] of Object.entries(macro.hotkeys)) {
+        for (let [key, hotkey] of Object.entries(macroConfig.hotkeys)) {
             if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
             key = getModifiersAndKey(key).join("");
 
@@ -142,7 +143,7 @@ module.exports = function MacroMaker(mod) {
         }
 
         // Parse Skills
-        for (let [skill, hotkey] of Object.entries(macro.skills)) {
+        for (let [skill, hotkey] of Object.entries(macroConfig.skills)) {
             if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
             const key = getModifiersAndKey(hotkey.key).join("");
 
@@ -183,7 +184,7 @@ module.exports = function MacroMaker(mod) {
 
         if (repeaterKeys.size) {
             useRepeater = true;
-            compilerPromises.push(AHK.compileRepeaterAhk([...repeaterKeys], macro.toggleRepeaterKey ? getModifiersAndKey(macro.toggleRepeaterKey).join("") : "\\", path.join(__dirname, "ahk", "repeater.ahk")));
+            compilerPromises.push(AHK.compileRepeaterAhk([...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", path.join(__dirname, "ahk", "repeater.ahk")));
         } else if (fs.existsSync(path.join(__dirname, "ahk", "repeater.ahk"))) {
             fs.unlinkSync(path.join(__dirname, "ahk", "repeater.ahk"));
         }
@@ -202,7 +203,7 @@ module.exports = function MacroMaker(mod) {
     }
 
     function handleAction(action, trigger) {
-        let delay = (action.delay || 0) / (action.fixedDelay === true ? 1 : player.aspd);
+        let delay = (action.delay || 0) / (action.fixedDelay === true ? 1 : Math.max(player.aspd, trigger ? trigger.speed : 0));
 
         if (action.enableIfSkillCooldown) {
             const skills = (Array.isArray(action.enableIfSkillCooldown) ? action.enableIfSkillCooldown : [action.enableIfSkillCooldown]).map(x => parseInt(x)).filter(x => !isNaN(x));
@@ -235,17 +236,20 @@ module.exports = function MacroMaker(mod) {
         }
 
         const skillBaseId = trigger ? Math.floor(trigger.skill.id / 1e4) : 0;
+        const actionKey = action.skill ? macroConfig.skills[action.skill].key : action.key;
 
         switch (action.action.toLowerCase()) {
             case "keytap": {
+                if (!actionKey) return;
                 mod.setTimeout(() => {
-                    ahk.keyTap(...getModifiersAndKey(action.key).reverse(), action.holdDuration);
+                    ahk.keyTap(...getModifiersAndKey(actionKey).reverse(), action.holdDuration);
                 }, delay);
                 break;
             }
             case "keyrepeat": {
+                if (!actionKey) return;
                 mod.setTimeout(() => {
-                    ahk.keyRepeat(...getModifiersAndKey(action.key).reverse(), action.duration, action.interval, (action.stopOnNextCast && trigger) ? skillBaseId : 0, (action.stopOnNextCast && trigger) ? lastCast : {skill: 0});
+                    ahk.keyRepeat(...getModifiersAndKey(actionKey).reverse(), action.duration, action.interval, (action.stopOnNextCast && trigger) ? skillBaseId : 0, (action.stopOnNextCast && trigger) ? lastCast : {skill: 0});
                 }, delay);
                 break;
             }
@@ -278,7 +282,7 @@ module.exports = function MacroMaker(mod) {
         const skillSubId = event.skill.id % 100;
 
         if (debugMode && event.stage === 0) {
-            command.message(`skillId: ${skillBaseId} subId: ${skillSubId} (${Math.ceil((Date.now() - lastTime) * player.aspd)}ms)`);
+            command.message(`skillId: ${skillBaseId} subId: ${skillSubId} (${Math.ceil((Date.now() - lastTime) * Math.max(player.aspd, event.speed))}ms)`);
             lastSkill = event.skill.id;
             lastTime = Date.now();
         }
