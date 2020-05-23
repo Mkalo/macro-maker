@@ -41,6 +41,7 @@ module.exports = function MacroMaker(mod) {
         debugMode = false,
         lastSkill,
         lastTime,
+        lastSpeed,
         useOutput,
         useRepeater,
         useInput,
@@ -145,21 +146,24 @@ module.exports = function MacroMaker(mod) {
         // Parse Skills
         for (let [skill, hotkey] of Object.entries(macroConfig.skills)) {
             if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
-            const key = getModifiersAndKey(hotkey.key).join("");
 
-            if (hotkey.repeater) {
-                repeaterKeys.add(key);
-            }
+            if (typeof hotkey.key === "string") {
+                const key = getModifiersAndKey(hotkey.key).join("");
 
-            const onPress = (typeof hotkey.onPress === "object" && !Array.isArray(hotkey.onPress)) ? [hotkey.onPress] : hotkey.onPress;
-            if (Array.isArray(onPress) && onPress.length) {
-                useInput = true;
-                if (hotkeyActions[key]) {
-                    hotkeyActions[key] = hotkeyActions[key].concat(onPress);
-                } else {
-                    hotkeyActions[key] = onPress;
+                if (hotkey.repeater) {
+                    repeaterKeys.add(key);
                 }
-                keys.add(key);
+
+                const onPress = (typeof hotkey.onPress === "object" && !Array.isArray(hotkey.onPress)) ? [hotkey.onPress] : hotkey.onPress;
+                if (Array.isArray(onPress) && onPress.length) {
+                    useInput = true;
+                    if (hotkeyActions[key]) {
+                        hotkeyActions[key] = hotkeyActions[key].concat(onPress);
+                    } else {
+                        hotkeyActions[key] = onPress;
+                    }
+                    keys.add(key);
+                }
             }
 
             const onCast = (typeof hotkey.onCast === "object" && !Array.isArray(hotkey.onCast)) ? [hotkey.onCast] : hotkey.onCast;
@@ -282,9 +286,10 @@ module.exports = function MacroMaker(mod) {
         const skillSubId = event.skill.id % 100;
 
         if (debugMode && event.stage === 0) {
-            command.message(`skillId: ${skillBaseId} subId: ${skillSubId} (${Math.ceil((Date.now() - lastTime) * Math.max(player.aspd, event.speed))}ms)`);
+            command.message(`skillId: ${skillBaseId} subId: ${skillSubId} (${Math.ceil((Date.now() - lastTime) * lastSpeed)}ms)`);
             lastSkill = event.skill.id;
             lastTime = Date.now();
+            lastSpeed = Math.max(player.aspd, event.speed);
         }
 
         if (!enabled || !ahk) return;
