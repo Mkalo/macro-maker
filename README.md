@@ -14,7 +14,7 @@ The module works by transpiling the config that is inside the macros folder to A
 
 ## Config
 
-In the config.json file, you have to put the path to where your AutoHotkey.exe is installed. Also you should change **skill-prediction** to false in case you don't use any kind of module that is "skill-prediction like" (any module that simulate your skills with fake skill packets).  
+In the config.json file, you have to put the path to where your AutoHotkey.exe is installed. 
 
 ---
 

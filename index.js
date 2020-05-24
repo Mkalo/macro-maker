@@ -35,6 +35,7 @@ module.exports = function MacroMaker(mod) {
         loading = false,
         cooldowns = {},
         lastCast = {},
+        emulatedSkills = {},
         enterGameEvent = null,
         leaveGameEvent = null,
         enabled = true,
@@ -77,6 +78,7 @@ module.exports = function MacroMaker(mod) {
             skillActions = {};
             lastCast = {};
             cooldowns = {};
+            emulatedSkills = {};
         }
     });
 
@@ -280,8 +282,15 @@ module.exports = function MacroMaker(mod) {
         }
     }
 
-    mod.hook("S_ACTION_STAGE", 9, { order: -Infinity, filter: { fake: !!config["skill-prediction"] }}, event => {
+    mod.hook("S_ACTION_STAGE", 9, { order: -Infinity, filter: { fake: null }}, (event, fake) => {
         if (event.gameId !== mod.game.me.gameId) return;
+        
+        if (!(event.skill.id in emulatedSkills)) {
+            emulatedSkills[event.skill.id] = fake;
+        } else if (emulatedSkills[event.skill.id] !== fake) {
+            return;
+        }
+        
         const skillBaseId = Math.floor(event.skill.id / 1e4);
         const skillSubId = event.skill.id % 100;
 
