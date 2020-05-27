@@ -140,33 +140,11 @@ module.exports = function MacroMaker(mod) {
         useRepeater = false;
         useInput = false;
 
-        // Parse Hotkeys
-        for (let [key, hotkey] of Object.entries(macroConfig.hotkeys)) {
-            if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
-            key = getModifiersAndKey(key).join("");
-
-            if (hotkey.repeater) {
-                repeaterKeys.add(key);
-            }
-
-            const onPress = (typeof hotkey.onPress === "object" && !Array.isArray(hotkey.onPress)) ? [hotkey.onPress] : hotkey.onPress;
-            if (Array.isArray(onPress) && onPress.length) {
-                useInput = true;
-                if (hotkeyActions[key]) {
-                    hotkeyActions[key] = hotkeyActions[key].concat(onPress);
-                } else {
-                    hotkeyActions[key] = onPress;
-                }
-                keys.add(key);
-            }
-        }
-
-        // Parse Skills
-        for (let [skill, hotkey] of Object.entries(macroConfig.skills)) {
-            if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
-
-            if (typeof hotkey.key === "string") {
-                const key = getModifiersAndKey(hotkey.key).join("");
+        if (macroConfig.hotkeys) {
+            // Parse Hotkeys
+            for (let [key, hotkey] of Object.entries(macroConfig.hotkeys)) {
+                if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
+                key = getModifiersAndKey(key).join("");
 
                 if (hotkey.repeater) {
                     repeaterKeys.add(key);
@@ -183,14 +161,40 @@ module.exports = function MacroMaker(mod) {
                     keys.add(key);
                 }
             }
+        }
 
-            const onCast = (typeof hotkey.onCast === "object" && !Array.isArray(hotkey.onCast)) ? [hotkey.onCast] : hotkey.onCast;
-            if (Array.isArray(onCast) && onCast.length) {
-                useInput = true;
-                if (skillActions[skill]) {
-                    skillActions[skill] = skillActions[skill].concat(onCast);
-                } else {
-                    skillActions[skill] = onCast;
+        if (macroConfig.skills) {
+            // Parse Skills
+            for (let [skill, hotkey] of Object.entries(macroConfig.skills)) {
+                if (typeof hotkey !== "object" || hotkey.enabled !== true) continue;
+
+                if (typeof hotkey.key === "string") {
+                    const key = getModifiersAndKey(hotkey.key).join("");
+
+                    if (hotkey.repeater) {
+                        repeaterKeys.add(key);
+                    }
+
+                    const onPress = (typeof hotkey.onPress === "object" && !Array.isArray(hotkey.onPress)) ? [hotkey.onPress] : hotkey.onPress;
+                    if (Array.isArray(onPress) && onPress.length) {
+                        useInput = true;
+                        if (hotkeyActions[key]) {
+                            hotkeyActions[key] = hotkeyActions[key].concat(onPress);
+                        } else {
+                            hotkeyActions[key] = onPress;
+                        }
+                        keys.add(key);
+                    }
+                }
+
+                const onCast = (typeof hotkey.onCast === "object" && !Array.isArray(hotkey.onCast)) ? [hotkey.onCast] : hotkey.onCast;
+                if (Array.isArray(onCast) && onCast.length) {
+                    useInput = true;
+                    if (skillActions[skill]) {
+                        skillActions[skill] = skillActions[skill].concat(onCast);
+                    } else {
+                        skillActions[skill] = onCast;
+                    }
                 }
             }
         }
@@ -326,7 +330,7 @@ module.exports = function MacroMaker(mod) {
 
     mod.hook("S_ACTION_STAGE", 9, { order: -Infinity, filter: { fake: null }}, (event, fake) => {
         if (event.gameId !== mod.game.me.gameId) return;
-        
+
         if (!(event.skill.id in emulatedSkills)) {
             emulatedSkills[event.skill.id] = fake;
         } else if (emulatedSkills[event.skill.id] !== fake) {
