@@ -24,6 +24,7 @@ In the config.json file, you have to put the path to where your AutoHotkey.exe i
 | -------------------------- |-------------------- |
 | !macro                     | Toggles macro on and off |
 | !macro debug               | Toggles skill debug on and off |
+| !macro debug abnormal      | Toggles abnormal debug on and off |
 | !proxy reload macro-maker  | Reloads macro and recompile it. **Don't reload again while it's reloading.** |
 
 ---
@@ -86,8 +87,10 @@ Array of actions that are going to be processed. You can have multiple actions p
 * inCombat: **true | false** - If set, action only happens if inCombat state equals to this value
 * skillSubId: **subId | [subIds]** - Used on onCast only, specify which skill subId(s) to trigger action
 * stopOnNextCast: **true | false** - Used on onCast only if action type **keyRepeat**, stops key presses after casting a skill
-* enableIfSkillCooldown: **skill | [skills]** - This action is only executed if these skill(s) are on cooldown
-* disableIfSkillCooldown: **skill | [skills]** - This action is only executed if these skill(s) are not on cooldown
+* enableIfSkillCooldown: **skill | [skills]** - This action is only executed if all of these skill(s) are on cooldown
+* disableIfSkillCooldown: **skill | [skills]** - This action is only executed if all of these skill(s) are not on cooldown
+* enableIfAbnormality: **abnormalityId | [abnormalityIds]** - This action is only executed if all of these abnormalities are active
+* disableIfAbnormality: **abnormalityId | [abnormalityIds]** - This action is only executed if all of these abnormalities are not active
 
 #### Example
 

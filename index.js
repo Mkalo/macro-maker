@@ -25,6 +25,7 @@ module.exports = function MacroMaker(mod) {
     const config = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json")));
     if (!config.enabled) return;
     AHK.init(config.ahkPath);
+    mod.game.initialize("me.abnormalities");
 
     let ahk = null,
         macroFile = null,
@@ -40,6 +41,7 @@ module.exports = function MacroMaker(mod) {
         leaveGameEvent = null,
         enabled = true,
         debugMode = false,
+        abnormalDebug = false,
         lastSkill,
         lastTime,
         lastSpeed,
@@ -83,9 +85,23 @@ module.exports = function MacroMaker(mod) {
     });
 
     command.add("macro", {
-        debug() {
-            debugMode = !debugMode;
-            command.message(`Debug mode is now ${debugMode ? 'en' : 'dis'}abled.`);
+        debug(type) {
+            if (!type) {
+                debugMode = !debugMode;
+                command.message(`Debug mode is now ${debugMode ? 'en' : 'dis'}abled.`);
+            } else {
+                switch (type.toLowerCase()) {
+                    case "abnormal": {
+                        abnormalDebug = !abnormalDebug;
+                        command.message(`Abnormal debug is now ${abnormalDebug ? 'en' : 'dis'}abled.`);
+                        break;
+                    }
+                    default: {
+                        command.message(`Unknown debug type ${type}.`);
+                        break;
+                    }
+                }
+            }
         },
         async $default() {
             enabled = !enabled;
@@ -231,6 +247,32 @@ module.exports = function MacroMaker(mod) {
             }
         }
 
+        if (action.enableIfAbnormality) {
+            const abnormalities = (Array.isArray(action.enableIfAbnormality) ? action.enableIfAbnormality : [action.enableIfAbnormality]).map(x => parseInt(x)).filter(x => !isNaN(x));
+
+            for (const abnormalityId of abnormalities) {
+                const abnormality = mod.game.me.abnormalities[abnormalityId];
+                if (!abnormality) return;
+                
+                if (abnormality.remaining < delay) {
+                    return;
+                }
+            }
+        }
+
+        if (action.disableIfAbnormality) {
+            const abnormalities = (Array.isArray(action.disableIfAbnormality) ? action.disableIfAbnormality : [action.disableIfAbnormality]).map(x => parseInt(x)).filter(x => !isNaN(x));
+
+            for (const abnormalityId of abnormalities) {
+                const abnormality = mod.game.me.abnormalities[abnormalityId];
+                if (!abnormality) continue;
+                
+                if (abnormality.remaining >= delay) {
+                    return;
+                }
+            }
+        }
+
         if (typeof action.inCombat === "boolean" && action.inCombat !== mod.game.me.inCombat) {
             return;
         }
@@ -312,6 +354,12 @@ module.exports = function MacroMaker(mod) {
     mod.hook('S_START_COOLTIME_SKILL', 3, { order: Infinity }, event => {
         const skillBaseId = Math.floor(event.skill.id / 1e4);
         cooldowns[skillBaseId] = { start: Date.now(), cooldown: event.cooldown };
+    });
+
+    mod.hook('S_ABNORMALITY_BEGIN', 4, { order: Infinity, filter: { fake: null } }, event => {
+        if (!abnormalDebug || event.target !== mod.game.me.gameId || !(event.id in mod.game.me.abnormalities)) return;
+        const abnormality = mod.game.me.abnormalities[event.id];
+        command.message(`${abnormality.data.name || "Unnamed"} (ID: ${abnormality.id} duration: ${abnormality.data.time})`);
     });
 
     this.saveState = () => {
