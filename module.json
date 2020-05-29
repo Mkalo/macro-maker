@@ -11,5 +11,5 @@
         "library": "https://raw.githubusercontent.com/Kaseaa/library/master/module.json"
     },
     "supportUrl": "https://github.com/Mkalo/macro-maker/issues",
-    "servers": ["https://raw.githubusercontent.com/Mkalo/macro-maker/development/"]
+    "servers": ["https://raw.githubusercontent.com/Mkalo/macro-maker/master/"]
 }
