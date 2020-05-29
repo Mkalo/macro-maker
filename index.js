@@ -27,6 +27,9 @@ module.exports = function MacroMaker(mod) {
     AHK.init(config.ahkPath);
     mod.game.initialize("me.abnormalities");
 
+    const teraPid = mod.clientInterface.info.pid,
+        selfPid = process.pid;
+
     let ahk = null,
         macroFile = null,
         macroConfig = null,
@@ -39,6 +42,8 @@ module.exports = function MacroMaker(mod) {
         emulatedSkills = {},
         enterGameEvent = null,
         leaveGameEvent = null,
+        enterCombatEvent = null,
+        leaveCombatEvent = null,
         enabled = true,
         debugMode = false,
         abnormalDebug = false,
@@ -83,6 +88,20 @@ module.exports = function MacroMaker(mod) {
             emulatedSkills = {};
         }
     });
+
+    if (config.repeaterOnlyInCombat) {
+        mod.game.me.on('enter_combat', enterCombatEvent = () => {
+            if (ahk) {
+                ahk.keyTap("f24", "");
+            }
+        });
+
+        mod.game.me.on('leave_combat', leaveCombatEvent = () => {
+            if (ahk) {
+                ahk.keyTap("f23", "");
+            }
+        });
+    }
 
     command.add("macro", {
         debug(type) {
@@ -203,16 +222,16 @@ module.exports = function MacroMaker(mod) {
 
         if (keys.size) {
             useOutput = true;
-            compilerPromises.push(AHK.compileOutputAhk([...keys], path.join(__dirname, "ahk", "output.ahk")));
-        } else if (fs.existsSync(path.join(__dirname, "ahk", "output.ahk"))) {
-            fs.unlinkSync(path.join(__dirname, "ahk", "output.ahk"));
+            compilerPromises.push(AHK.compileOutputAhk(path.join(__dirname, "ahk", `output_${selfPid}_${teraPid}.ahk`), teraPid, [...keys]));
         }
 
         if (repeaterKeys.size) {
             useRepeater = true;
-            compilerPromises.push(AHK.compileRepeaterAhk([...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", path.join(__dirname, "ahk", "repeater.ahk")));
-        } else if (fs.existsSync(path.join(__dirname, "ahk", "repeater.ahk"))) {
-            fs.unlinkSync(path.join(__dirname, "ahk", "repeater.ahk"));
+            compilerPromises.push(AHK.compileRepeaterAhk(path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`), teraPid, [...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", config.repeaterStartSuspended));
+        }
+
+        if (useInput) {
+            compilerPromises.push(AHK.compileInputAhk(path.join(__dirname, "ahk", `input_${selfPid}_${teraPid}.ahk`), teraPid));
         }
 
         const promise = Promise.all(compilerPromises);
@@ -315,7 +334,7 @@ module.exports = function MacroMaker(mod) {
     function runAhk(useInput, useOutput, useRepeater) {
         if (reloading || ahk) return;
 
-        ahk = new AHK(useInput ? path.join(__dirname, "ahk", "input.ahk") : false, useOutput ? path.join(__dirname, "ahk", "output.ahk") : false, useRepeater ? path.join(__dirname, "ahk", "repeater.ahk") : false);
+        ahk = new AHK(useInput ? path.join(__dirname, "ahk", `input_${selfPid}_${teraPid}.ahk`) : false, useOutput ? path.join(__dirname, "ahk", `output_${selfPid}_${teraPid}.ahk`) : false, useRepeater ? path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`) : false);
 
         if (useInput) {
             ahk.on("hotkey_press", hotkey => {
@@ -396,6 +415,8 @@ module.exports = function MacroMaker(mod) {
         }
         if (enterGameEvent) mod.game.off("enter_game", enterGameEvent);
         if (leaveGameEvent) mod.game.off("leave_game", leaveGameEvent);
+        if (enterCombatEvent) mod.game.me.off("enter_combat", enterCombatEvent);
+        if (leaveCombatEvent) mod.game.me.off("leave_combat", leaveCombatEvent);
         command.remove(['macro']);
     }
 }

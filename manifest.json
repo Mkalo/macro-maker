@@ -1,13 +1,13 @@
 {
 	"files": {
-		"index.js": "b6bd16c640ebd1dae7230867c9985fa1d823355661af0a7e7fbeeb08231acb95",
+		"index.js": "9ff3699fef0663c5dd525720510f569a4d22817f17359179efa620b31d0f41ab",
 		"README.md": "32d3c836c9b5bf4432179dd69287e88649e936523456794958a8921457fb1f95",
 		"Matt.js": "5049cd28d7dcf04e68605cae15510bef3fa707933b4d7fa562ecfb66dfed392b",
-		"lib/ahk.js": "1a6f765e2bcafc477bedbdc29cbc9c2b5b9ad6b7bb762c8eb68725639bedab73",
-		"ahk/input.ahk": "beb806e81d8f37aa86ce346a88f7a1c5421841ceef1a1138f33ebc4c01fcd7fe",
+		"lib/ahk.js": "dc8d6b5a6fee2430f41e7f6a5961d1a0e1ee60c583ccae7b727ef4e5f697b643",
+		"ahk/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 		"config.json": {
 			"overwrite": false,
-			"hash": "303750c9c68d4967c6561857c0f210224c42212badd96509f8cb086a2484b16b"
+			"hash": "3ffcebd1b508d321a8edddc7d42d366b0ef9a7e9492b2f070487e8484805ebfb"
 		},
 		"macros/Archer.js": {
 			"overwrite": false,
@@ -61,10 +61,11 @@
 			"overwrite": false,
 			"hash": "4c7a59ac37cd2914c85abf341f009aa886e08f174e212132bf7ab6a490b0ba91"
 		},
-		"module.json": "600bb0933448f811a8ae25b1a5ea6fa966ceb1c31173fdfa0a02f882f36e5972"
+		"module.json": "eaf6b2936c2affb145e95b5f85b0e9a21ac0d7f2233f941c1bcfe54853efc5bf"
 	},
 	"defs": {
 		"S_ACTION_STAGE": 9,
-		"S_START_COOLTIME_SKILL": 3
+		"S_START_COOLTIME_SKILL": 3,
+		"S_ABNORMALITY_BEGIN": 4
 	}
 }
