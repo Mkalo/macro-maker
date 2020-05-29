@@ -1,9 +1,9 @@
 {
 	"files": {
-		"index.js": "e03013d1eb547325b41c7df7232220c0bed38d6ac01333f6b76d1a1711ad0d8e",
+		"index.js": "9ff3699fef0663c5dd525720510f569a4d22817f17359179efa620b31d0f41ab",
 		"README.md": "32d3c836c9b5bf4432179dd69287e88649e936523456794958a8921457fb1f95",
 		"Matt.js": "5049cd28d7dcf04e68605cae15510bef3fa707933b4d7fa562ecfb66dfed392b",
-		"lib/ahk.js": "2d1c87227fb58cfe57b631a29c1ea948776d4a862d0a2138bb92223f19da5725",
+		"lib/ahk.js": "dc8d6b5a6fee2430f41e7f6a5961d1a0e1ee60c583ccae7b727ef4e5f697b643",
 		"ahk/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 		"config.json": {
 			"overwrite": false,
