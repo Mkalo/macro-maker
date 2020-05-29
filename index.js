@@ -54,6 +54,15 @@ module.exports = function MacroMaker(mod) {
         useRepeater,
         useInput,
         compiled;
+
+    let regexOut;
+    fs.readdirSync(path.join(__dirname, "ahk"))
+    .filter(x => path.extname(x) === '.ahk' && (regexOut = /[a-z]+_(\d+)_\d+/g.exec(path.basename(x))) && regexOut[1] != selfPid)
+    .forEach(file => {
+        try {
+            fs.unlinkSync(path.join(__dirname, "ahk", file));
+        } catch (e) { }
+    });
     
     mod.setTimeout(() => {
         if (mod.game.isIngame && !reloading && !macroFile) {
