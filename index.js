@@ -345,10 +345,6 @@ module.exports = function MacroMaker(mod) {
                 }
             });
         }
-
-        if (config.repeaterOnlyInCombat) {
-            mod.setTimeout(() => ahk.keyTap("f23", ""), 1000);
-        }
     }
 
     mod.hook("S_ACTION_STAGE", 9, { order: -Infinity, filter: { fake: null }}, (event, fake) => {
