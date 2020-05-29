@@ -90,15 +90,15 @@ module.exports = function MacroMaker(mod) {
     });
 
     if (config.repeaterOnlyInCombat) {
-        mod.game.on('enter_combat', enterCombatEvent = () => {
+        mod.game.me.on('enter_combat', enterCombatEvent = () => {
             if (ahk) {
-                ahk.keyTap("{f24}");
+                ahk.keyTap("f24", "");
             }
         });
 
-        mod.game.on('leave_combat', leaveCombatEvent = () => {
+        mod.game.me.on('leave_combat', leaveCombatEvent = () => {
             if (ahk) {
-                ahk.keyTap("{f23}");
+                ahk.keyTap("f23", "");
             }
         });
     }
@@ -347,7 +347,7 @@ module.exports = function MacroMaker(mod) {
         }
 
         if (config.repeaterOnlyInCombat) {
-            ahk.keyTap("{f23}");
+            mod.setTimeout(() => ahk.keyTap("f23", ""), 1000);
         }
     }
 
@@ -419,8 +419,8 @@ module.exports = function MacroMaker(mod) {
         }
         if (enterGameEvent) mod.game.off("enter_game", enterGameEvent);
         if (leaveGameEvent) mod.game.off("leave_game", leaveGameEvent);
-        if (enterCombatEvent) mod.game.off("enter_combat", enterCombatEvent);
-        if (leaveCombatEvent) mod.game.off("leave_combat", leaveCombatEvent);
+        if (enterCombatEvent) mod.game.me.off("enter_combat", enterCombatEvent);
+        if (leaveCombatEvent) mod.game.me.off("leave_combat", leaveCombatEvent);
         command.remove(['macro']);
     }
 }
