@@ -227,7 +227,7 @@ module.exports = function MacroMaker(mod) {
 
         if (repeaterKeys.size) {
             useRepeater = true;
-            compilerPromises.push(AHK.compileRepeaterAhk(path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`), teraPid, [...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\"), config.startSuspended);
+            compilerPromises.push(AHK.compileRepeaterAhk(path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`), teraPid, [...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", config.repeaterStartSuspended));
         }
 
         if (useInput) {
