@@ -227,10 +227,6 @@ module.exports = function MacroMaker(mod) {
             }
         }
 
-        if (config.repeaterOnlyInCombat) {
-            useInput = true;
-        }
-
         const compilerPromises = [];
 
         if (keys.size) {
@@ -243,7 +239,8 @@ module.exports = function MacroMaker(mod) {
             compilerPromises.push(AHK.compileRepeaterAhk(path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`), teraPid, [...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", config.repeaterStartSuspended));
         }
 
-        if (useInput) {
+        if (useInput || config.repeaterOnlyInCombat) {
+            useInput = true;
             compilerPromises.push(AHK.compileInputAhk(path.join(__dirname, "ahk", `input_${selfPid}_${teraPid}.ahk`), teraPid));
         }
 
@@ -349,7 +346,7 @@ module.exports = function MacroMaker(mod) {
 
         ahk = new AHK(useInput ? path.join(__dirname, "ahk", `input_${selfPid}_${teraPid}.ahk`) : false, useOutput ? path.join(__dirname, "ahk", `output_${selfPid}_${teraPid}.ahk`) : false, useRepeater ? path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`) : false);
 
-        if (useInput) {
+        if (useOutput) {
             ahk.on("hotkey_press", hotkey => {
                 if (!enabled) return;
 
