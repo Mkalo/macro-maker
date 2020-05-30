@@ -271,7 +271,7 @@ module.exports = function MacroMaker(mod) {
         }
 
         if (action.disableIfSkillCooldown) {
-            const skills = (Array.isArray(action.enableIfSkillCooldown) ? action.enableIfSkillCooldown : [action.enableIfSkillCooldown]).map(x => parseInt(x)).filter(x => !isNaN(x));
+            const skills = (Array.isArray(action.disableIfSkillCooldown) ? action.disableIfSkillCooldown : [action.disableIfSkillCooldown]).map(x => parseInt(x)).filter(x => !isNaN(x));
 
             for (const skill of skills) {
                 if (cooldowns[skill] && Date.now() - cooldowns[skill].start < cooldowns[skill].cooldown - delay) {
