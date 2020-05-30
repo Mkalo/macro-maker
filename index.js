@@ -425,8 +425,8 @@ module.exports = function MacroMaker(mod) {
         }
         if (enterGameEvent) mod.game.off("enter_game", enterGameEvent);
         if (leaveGameEvent) mod.game.off("leave_game", leaveGameEvent);
-        if (enterCombatEvent) mod.game.me.off("enter_combat", enterCombatEvent);
-        if (leaveCombatEvent) mod.game.me.off("leave_combat", leaveCombatEvent);
+        if (enterCombatEvent && mod.game.me) mod.game.me.off("enter_combat", enterCombatEvent);
+        if (leaveCombatEvent && mod.game.me) mod.game.me.off("leave_combat", leaveCombatEvent);
         command.remove(['macro']);
     }
 }

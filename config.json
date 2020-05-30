@@ -2,5 +2,5 @@
     "enabled": true,
     "repeaterStartSuspended": false,
     "repeaterOnlyInCombat": false,
-    "ahkPath": "C:\\Program Files\\AutoHotkey\\AutoHotkey.exe"
+    "ahkPath": "%ProgramFiles%\\AutoHotkey\\AutoHotkey.exe"
 }
