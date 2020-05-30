@@ -227,6 +227,10 @@ module.exports = function MacroMaker(mod) {
             }
         }
 
+        if (config.repeaterOnlyInCombat) {
+            useInput = true;
+        }
+
         const compilerPromises = [];
 
         if (keys.size) {
@@ -239,7 +243,7 @@ module.exports = function MacroMaker(mod) {
             compilerPromises.push(AHK.compileRepeaterAhk(path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`), teraPid, [...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", config.repeaterStartSuspended));
         }
 
-        if (useInput || config.repeaterOnlyInCombat) {
+        if (useInput) {
             compilerPromises.push(AHK.compileInputAhk(path.join(__dirname, "ahk", `input_${selfPid}_${teraPid}.ahk`), teraPid));
         }
 
