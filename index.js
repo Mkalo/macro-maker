@@ -57,7 +57,7 @@ module.exports = function MacroMaker(mod) {
 
     let regexOut;
     fs.readdirSync(path.join(__dirname, "ahk"))
-    .filter(x => path.extname(x) === '.ahk' && (regexOut = /[a-z]+_(\d+)_\d+/g.exec(path.basename(x))) && regexOut[1] != selfPid)
+    .filter(x => path.extname(x) === '.ahk' && (!(regexOut = /[a-z]+_(\d+)_\d+/g.exec(path.basename(x))) || regexOut[1] != selfPid))
     .forEach(file => {
         try {
             fs.unlinkSync(path.join(__dirname, "ahk", file));
@@ -239,7 +239,7 @@ module.exports = function MacroMaker(mod) {
             compilerPromises.push(AHK.compileRepeaterAhk(path.join(__dirname, "ahk", `repeater_${selfPid}_${teraPid}.ahk`), teraPid, [...repeaterKeys], macroConfig.toggleRepeaterKey ? getModifiersAndKey(macroConfig.toggleRepeaterKey).join("") : "\\", config.repeaterStartSuspended));
         }
 
-        if (useInput) {
+        if (useInput || config.repeaterOnlyInCombat) {
             compilerPromises.push(AHK.compileInputAhk(path.join(__dirname, "ahk", `input_${selfPid}_${teraPid}.ahk`), teraPid));
         }
 
