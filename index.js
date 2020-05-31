@@ -24,7 +24,7 @@ module.exports = function MacroMaker(mod) {
 
     const config = JSON.parse(fs.readFileSync(path.join(__dirname, "config.json")));
     if (!config.enabled) return;
-    AHK.init(config.ahkPath);
+    AHK.init(config.ahkPath.replace(/%(.+?)%/g, (_, match) => process.env[match] || _));
     mod.game.initialize("me.abnormalities");
 
     const teraPid = mod.clientInterface.info.pid,
