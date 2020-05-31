@@ -116,5 +116,4 @@ You can see more examples here [Matt.js](https://github.com/Mkalo/macro-maker/bl
 
 ## Known Issues
 
-Dual client not supported, and it will bug out.
 XButton1 and XButton2 are not working properly.
