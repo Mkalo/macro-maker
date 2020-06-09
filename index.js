@@ -389,6 +389,11 @@ module.exports = function MacroMaker(mod) {
         cooldowns[skillBaseId] = { start: Date.now(), cooldown: event.cooldown };
     });
 
+    mod.hook('S_DECREASE_COOLTIME_SKILL', 3, { order: Infinity }, event => {
+        const skillBaseId = Math.floor(event.skill.id / 1e4);
+        cooldowns[skillBaseId] = { start: Date.now(), cooldown: event.cooldown };
+    });
+
     mod.hook('S_ABNORMALITY_BEGIN', 4, { order: Infinity, filter: { fake: null } }, event => {
         if (!abnormalDebug || event.target !== mod.game.me.gameId || !(event.id in mod.game.me.abnormalities)) return;
         const abnormality = mod.game.me.abnormalities[event.id];
