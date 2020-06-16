@@ -376,7 +376,7 @@ module.exports = function MacroMaker(mod) {
             lastSpeed = Math.max(player.aspd, event.speed);
         }
 
-        if (!enabled || !ahk) return;
+        if (!enabled || !ahk || event.stage !== 0) return;
 
         lastCast.skill = skillBaseId;
         if (skillActions[skillBaseId]) {
