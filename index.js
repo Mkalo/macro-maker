@@ -389,7 +389,7 @@ module.exports = function MacroMaker(mod) {
         cooldowns[skillBaseId] = { start: Date.now(), cooldown: event.cooldown };
     });
 
-    mod.hook('S_DECREASE_COOLTIME_SKILL', 3, { order: Infinity }, event => {
+    mod.hook('S_DECREASE_COOLTIME_SKILL', 4, { order: Infinity }, event => {
         const skillBaseId = Math.floor(event.skill.id / 1e4);
         cooldowns[skillBaseId] = { start: Date.now(), cooldown: event.cooldown };
     });
